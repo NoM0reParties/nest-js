@@ -1,4 +1,4 @@
-import { prop } from "@typegoose/typegoose";
+import { ModelOptions, prop, Severity } from "@typegoose/typegoose";
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
 export enum TopLevelCategory {
@@ -31,6 +31,11 @@ export class TopPageAdvantages {
 }
 
 export interface TopPageModel extends Base { }
+@ModelOptions({
+	options: {
+		allowMixed: Severity.ALLOW,
+	},
+})
 export class TopPageModel extends TimeStamps {
 	@prop({ enum: TopLevelCategory })
 	firstCategory: TopLevelCategory;
@@ -47,10 +52,10 @@ export class TopPageModel extends TimeStamps {
 	@prop()
 	category: string;
 
-	@prop({type: () => HhData})
+	@prop({ type: () => HhData })
 	hh?: HhData;
 
-	@prop({type: () => [TopPageAdvantages]})
+	@prop({ type: () => [TopPageAdvantages] })
 	advantages: TopPageAdvantages[];
 
 	@prop()
